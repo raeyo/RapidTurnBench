@@ -1,0 +1,20 @@
+{
+  "model": "SONIC-v1.1-PT",
+  "episode_id": "v1_turn+0_seed2",
+  "requested_speed_m_s": 1.0,
+  "turn_angle_deg": 0.0,
+  "seed": 2,
+  "status": "completed",
+  "approach_ready": true,
+  "pre_cue_actual_speed_m_s": 0.8885046243667603,
+  "turn_reached": true,
+  "turn_time_s": 0.14000000000000012,
+  "transient_velocity_error_m_s": 0.2976824243304137,
+  "transient_window_complete": true,
+  "peak_tilt_deg": 11.538408279418945,
+  "fall": false,
+  "final_direction_error_deg": 9.883570642121738,
+  "minimum_speed_ratio": 0.7299177356650068,
+  "torque_clipped_joint_ticks": 0,
+  "mean_inference_wall_s": 0.002440848701905149
+}

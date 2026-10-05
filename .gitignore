@@ -1,0 +1,14 @@
+.runtime/
+.native/
+.cache/
+third_party/
+results/*
+!results/isaac/
+results/isaac/*
+!results/isaac/sonic_quickcheck/
+results/isaac/sonic_quickcheck/episodes/*/command.txt*
+*.log
+__pycache__/
+*.pyc
+core
+results/isaac/sonic_quickcheck/episodes/*/sonic.log

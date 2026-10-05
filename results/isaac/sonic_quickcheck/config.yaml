@@ -1,0 +1,211 @@
+task:
+  name: RapidTurn-Isaac-Quickcheck
+  implementation_status: experimental
+  profile_version: isaac-quickcheck-v1-draft
+  purpose: functional_validation
+submission:
+  contract_version: rapidturn-policy-v1
+  source: local_directory
+  action_type: joint_effort_nm
+  joint_order_source: evaluator_asset_profile
+  direct_simulator_access: false
+robot:
+  name: unitree_g1
+  body_dof: 29
+simulation:
+  backend: isaaclab
+  physics_dt: 0.005
+  control_frequency: 50
+  num_envs: 1
+  terrain: flat
+  actuator_mode: effort_only
+  effort_limits_source: evaluator_asset_profile
+policy:
+  name: SONIC-v1.1-PT
+  frozen: true
+  planner_frequency: 10
+timing:
+  standing_duration: 1.0
+  approach_duration: 2.0
+  post_switch_duration: 3.0
+command:
+  speed: 1.0
+  turn_angles: &id001
+  - 0
+  - 90
+  - -90
+  - 180
+  frame: pre_cue_heading_relative_then_fixed_in_world
+  facing_matches_movement: true
+speed_sweep:
+  enabled: false
+  candidate_speeds_m_s:
+  - 0.5
+  - 1.0
+  - 1.5
+  turn_angles:
+  - 90
+  - -90
+  - 180
+  pre_cue_actual_speed_window_s: 0.5
+  minimum_approach_speed_m_s: 0.2
+  group_by:
+  - requested_speed
+  - turn_angle
+evaluation:
+  seeds: &id002
+  - 0
+  - 1
+  - 2
+  initialization_randomization: false
+  domain_randomization: false
+  aggregate_success_rate: false
+  clock: simulation_lockstep
+  record_inference_wall_time: true
+  record_episode_status: true
+direction_response:
+  velocity_filter: causal_boxcar_vector_average
+  filter_window_s: 0.2
+  direction_threshold_deg: 15.0
+  facing_threshold_deg: 15.0
+  minimum_speed_m_s: 0.2
+  minimum_speed_fraction_of_pre_cue: 0.5
+  hold_duration_s: 0.2
+  timestamp: start_of_first_valid_interval
+  final_direction_error_window_s: 1.0
+  log_minimum_filtered_speed_ratio: true
+transient:
+  window_s: 1.5
+  filtered_velocity: false
+  aggregate_incomplete_windows: false
+failure:
+  min_root_height_ratio: 0.6
+  max_torso_tilt_deg: 60.0
+output:
+  representative_seed: 0
+  files:
+  - report.html
+  - summary.csv
+  - summary.md
+  - episodes.csv
+  - config.yaml
+  - provenance.json
+  - episodes/*.npz
+  - videos/*.mp4
+  - figures/trajectory_xy.png
+demo:
+  camera: rear_follow
+  turn_camera_heading: hold_pre_cue_yaw
+  realign_after_turn: true
+  cue_position: top_center
+  cue_labels:
+    90: "\u2190 LEFT"
+    -90: "RIGHT \u2192"
+    180: "\u21B6 TURN BACK"
+    0: STRAIGHT
+  cue_matches_command_simulation_time: true
+  show_countdown_before_cue: false
+  show_requested_and_actual_speed: true
+  show_response_timer: true
+asset_profile:
+  name: sonic-g1-urdf-effort-v1
+  joint_names:
+  - left_hip_pitch_joint
+  - left_hip_roll_joint
+  - left_hip_yaw_joint
+  - left_knee_joint
+  - left_ankle_pitch_joint
+  - left_ankle_roll_joint
+  - right_hip_pitch_joint
+  - right_hip_roll_joint
+  - right_hip_yaw_joint
+  - right_knee_joint
+  - right_ankle_pitch_joint
+  - right_ankle_roll_joint
+  - waist_yaw_joint
+  - waist_roll_joint
+  - waist_pitch_joint
+  - left_shoulder_pitch_joint
+  - left_shoulder_roll_joint
+  - left_shoulder_yaw_joint
+  - left_elbow_joint
+  - left_wrist_roll_joint
+  - left_wrist_pitch_joint
+  - left_wrist_yaw_joint
+  - right_shoulder_pitch_joint
+  - right_shoulder_roll_joint
+  - right_shoulder_yaw_joint
+  - right_elbow_joint
+  - right_wrist_roll_joint
+  - right_wrist_pitch_joint
+  - right_wrist_yaw_joint
+  nominal_joint_position:
+  - -0.1
+  - 0
+  - 0
+  - 0.3
+  - -0.2
+  - 0
+  - -0.1
+  - 0
+  - 0
+  - 0.3
+  - -0.2
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0.2
+  - 0.2
+  - 0
+  - 0.6
+  - 0
+  - 0
+  - 0
+  - 0.2
+  - -0.2
+  - 0
+  - 0.6
+  - 0
+  - 0
+  - 0
+  standing_root_height: 0.793
+  effort_limits:
+  - 88.0
+  - 88.0
+  - 88.0
+  - 139.0
+  - 50.0
+  - 50.0
+  - 88.0
+  - 88.0
+  - 88.0
+  - 139.0
+  - 50.0
+  - 50.0
+  - 88.0
+  - 50.0
+  - 50.0
+  - 25.0
+  - 25.0
+  - 25.0
+  - 25.0
+  - 25.0
+  - 5.0
+  - 5.0
+  - 25.0
+  - 25.0
+  - 25.0
+  - 25.0
+  - 25.0
+  - 5.0
+  - 5.0
+  asset_sha256: c771731e69e79230ed0208c9dd40de02ea2a79042c1b350ef1125ef0f6b4f134
+  self_collisions: false
+  armature: 0.01
+  ground_friction: 1.0
+run_conditions:
+  angles: *id001
+  speeds:
+  - 1.0
+  seeds: *id002
